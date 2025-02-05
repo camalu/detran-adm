@@ -12,7 +12,7 @@ import { OverviewCardsGroup } from "./_components/overview-cards";
 import { OverviewCardsSkeleton } from "./_components/overview-cards/skeleton";
 import { RegionLabels } from "./_components/region-labels";
 import { useSearchParams } from "next/navigation"; // 🛠️ Agora pegamos os parâmetros corretamente
-import axios from "axios";
+import api from "@/utils/api"; // 🔥 Importando API com interceptação
 
 export default function Home() {
   const searchParams = useSearchParams(); // 🛠️ Pegamos os parâmetros corretamente
@@ -40,9 +40,9 @@ export default function Home() {
           console.log("Token encontrado:", token);
           console.log("Buscando dados do dashboard...");
 
-          const res = await axios.get("http://localhost:5000/api/dashboard", {
+          const res = await api.get("/dashboard", {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${localStorage.getItem("detran_admin_token")}`,
             },
           });
 

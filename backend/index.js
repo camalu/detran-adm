@@ -6,6 +6,7 @@ import loginRoutes from "./routes/login.js";
 import registerRoutes from "./routes/register.js";
 import dashboardRoutes from "./routes/dashboard.js";
 import visitantesRoutes from "./routes/visitantes.js";
+import authMiddleware from "./middlewares/authMiddleware.js"; // 🔥 Importando middleware
 
 dotenv.config();
 
@@ -23,7 +24,7 @@ mongoose
 
 app.use("/api", loginRoutes);
 app.use("/api", registerRoutes);
-app.use("/api", dashboardRoutes);
+app.use("/api", authMiddleware, dashboardRoutes);
 app.use("/api", visitantesRoutes);
 
 const PORT = process.env.PORT || 5000;
