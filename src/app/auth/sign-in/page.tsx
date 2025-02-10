@@ -11,8 +11,13 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogin = async () => {
     setError(""); // Limpa erros anteriores
@@ -34,7 +39,7 @@ export default function SignInPage() {
 
       if (res.data.token) {
         localStorage.setItem("detran_admin_token", res.data.token);
-        router.push("/");
+        router.push("/dashboard");
       } else {
         setError("Erro ao tentar fazer login. Tente novamente.");
       }
@@ -48,10 +53,13 @@ export default function SignInPage() {
     }
   };
 
+  // 🚀 Corrigindo erro de hidratação: só renderiza após o tema estar carregado
+  if (!mounted) return null;
+
   return (
     <div
       className={`flex h-screen w-screen items-center justify-center overflow-hidden ${
-        theme === "dark"
+        resolvedTheme === "dark"
           ? "bg-gray-900 text-white"
           : "bg-gray-100 text-gray-900"
       }`}

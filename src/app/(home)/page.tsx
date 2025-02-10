@@ -37,16 +37,12 @@ export default function Home() {
             return;
           }
 
-          console.log("Token encontrado:", token);
-          console.log("Buscando dados do dashboard...");
-
-          const res = await api.get("/dashboard", {
+          const res = await api.get("/", {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("detran_admin_token")}`,
             },
           });
 
-          console.log("Dados do dashboard recebidos:", res.data);
           setDashboardData(res.data);
         }
       } catch (error) {
