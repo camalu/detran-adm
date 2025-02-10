@@ -37,7 +37,7 @@ export default function Home() {
             return;
           }
 
-          const res = await api.get("/", {
+          const res = await api.get("/dashboard", {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("detran_admin_token")}`,
             },

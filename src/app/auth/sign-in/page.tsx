@@ -39,7 +39,7 @@ export default function SignInPage() {
 
       if (res.data.token) {
         localStorage.setItem("detran_admin_token", res.data.token);
-        router.push("/dashboard");
+        router.push("/");
       } else {
         setError("Erro ao tentar fazer login. Tente novamente.");
       }
