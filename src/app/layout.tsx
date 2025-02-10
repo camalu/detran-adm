@@ -31,8 +31,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
-        <title>Detran - Painel Administrativo</title>{" "}
-        {/* 🔥 Define o título fixo */}
+        <title>Detran - Painel Administrativo</title>
         <meta name="description" content="Sistema de gestão do Detran" />
       </head>
       <body>

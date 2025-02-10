@@ -1,19 +1,17 @@
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
-// Criação da instância do Axios
 const api = axios.create({
-  baseURL: "http://localhost:5000/api", // 🔥 Ajuste para a URL do seu backend
+  baseURL: "https://panelads-adm.onrender.com/api", // Ajuste conforme necessário
 });
 
-// Interceptor para respostas
+// Interceptor de resposta
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      console.error("Token expirado, deslogando usuário...");
-      localStorage.removeItem("detran_admin_token"); // 🔥 Remove o token
-      window.location.href = "/auth/sign-in"; // 🔥 Redireciona para login
+      // Token expirado ou inválido
+      localStorage.removeItem("detran_admin_token"); // Remove o token
+      window.location.href = "/auth/sign-in"; // Redireciona para a página de login
     }
     return Promise.reject(error);
   },
