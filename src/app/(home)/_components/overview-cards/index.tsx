@@ -1,4 +1,4 @@
-import { compactFormat } from "@/lib/format-number";
+import { compactFormat, standardFormat } from "@/lib/format-number";
 import { OverviewCard } from "./card";
 import * as icons from "./icons";
 
@@ -35,13 +35,13 @@ export function OverviewCardsGroup({
 
       <OverviewCard
         label="Total Gerado"
-        value={"R$" + totalGerados}
+        value={"R$" + standardFormat(totalGerados)}
         Icon={icons.Profit}
       />
 
       <OverviewCard
         label="Total Pago"
-        value={"R$" + totalVendas}
+        value={"R$" + standardFormat(totalVendas)}
         Icon={icons.Profit}
       />
     </div>
