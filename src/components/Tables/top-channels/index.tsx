@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -9,11 +11,14 @@ import {
 import { compactFormat, standardFormat } from "@/lib/format-number";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { getTopChannels } from "../fetch";
 
-export async function TopChannels({ className }: { className?: string }) {
-  const data = await getTopChannels();
-
+export function TopChannels({
+  className,
+  data,
+}: {
+  className?: string;
+  data: any;
+}) {
   return (
     <div
       className={cn(
@@ -22,47 +27,59 @@ export async function TopChannels({ className }: { className?: string }) {
       )}
     >
       <h2 className="mb-4 text-body-2xlg font-bold text-dark dark:text-white">
-        Top Channels
+        Clientes / Faturas
       </h2>
 
       <Table>
         <TableHeader>
           <TableRow className="border-none uppercase [&>th]:text-center">
-            <TableHead className="min-w-[120px] !text-left">Source</TableHead>
-            <TableHead>Visitors</TableHead>
-            <TableHead className="!text-right">Revenues</TableHead>
-            <TableHead>Sales</TableHead>
-            <TableHead>Conversion</TableHead>
+            <TableHead className="!text-left">Nome</TableHead>
+            <TableHead>Renavam</TableHead>
+            <TableHead>Fatura</TableHead>
+            <TableHead className="!text-right">Valor</TableHead>
+            <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
-          {data.map((channel, i) => (
+          {data.map((channel: any, i: any) => (
             <TableRow
               className="text-center text-base font-medium text-dark dark:text-white"
-              key={channel.name + i}
+              key={channel.nome + i}
             >
               <TableCell className="flex min-w-fit items-center gap-3">
-                <Image
-                  src={channel.logo}
-                  className="size-8 rounded-full object-cover"
-                  width={40}
-                  height={40}
-                  alt={channel.name + " Logo"}
-                  role="presentation"
-                />
-                <div className="">{channel.name}</div>
+                <div className="">{channel.nome}</div>
               </TableCell>
 
-              <TableCell>{compactFormat(channel.visitors)}</TableCell>
+              <TableCell>{channel.renavam}</TableCell>
+
+              <TableCell>
+                <div
+                  className={cn(
+                    "rounded-full px-3.5 py-1 text-sm font-medium",
+                    {
+                      "bg-[#219653]/[0.08] text-[#219653]":
+                        channel.statusPagamento === "pago",
+                      "bg-[#D34053]/[0.08] text-[#D34053]":
+                        channel.statusPagamento === "não gerado",
+                      "bg-[#FFA70B]/[0.08] text-[#FFA70B]":
+                        channel.statusPagamento === "gerado",
+                    },
+                  )}
+                >
+                  {channel.statusPagamento === "pago"
+                    ? "Pago"
+                    : channel.statusPagamento === "não gerado"
+                      ? "Não Gerado"
+                      : "Pendente"}
+                </div>
+              </TableCell>
 
               <TableCell className="!text-right text-green-light-1">
-                ${standardFormat(channel.revenues)}
+                R${standardFormat(channel.valorGerado)}
               </TableCell>
 
-              <TableCell>{channel.sales}</TableCell>
-
-              <TableCell>{channel.conversion}%</TableCell>
+              <TableCell>VISUALIZAR</TableCell>
             </TableRow>
           ))}
         </TableBody>

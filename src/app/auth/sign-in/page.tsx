@@ -57,22 +57,14 @@ export default function SignInPage() {
   if (!mounted) return null;
 
   return (
-    <div
-      className={`flex h-screen w-screen items-center justify-center overflow-hidden ${
-        resolvedTheme === "dark"
-          ? "bg-gray-900 text-white"
-          : "bg-gray-100 text-gray-900"
-      }`}
-    >
-      <SignIn
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        error={error}
-        loading={loading}
-        handleLogin={handleLogin}
-      />
-    </div>
+    <SignIn
+      email={email}
+      setEmail={setEmail}
+      password={password}
+      setPassword={setPassword}
+      error={error}
+      loading={loading}
+      handleLogin={handleLogin}
+    />
   );
 }
