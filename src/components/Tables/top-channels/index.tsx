@@ -11,6 +11,7 @@ import {
 import { compactFormat, standardFormat } from "@/lib/format-number";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { formatarData } from "@/utils/formatDate";
 
 export function TopChannels({
   className,
@@ -36,6 +37,7 @@ export function TopChannels({
             <TableHead className="!text-left">Nome</TableHead>
             <TableHead>Renavam</TableHead>
             <TableHead>Fatura</TableHead>
+            <TableHead>Data</TableHead>
             <TableHead className="!text-right">Valor</TableHead>
             <TableHead>Ações</TableHead>
           </TableRow>
@@ -74,6 +76,8 @@ export function TopChannels({
                       : "Pendente"}
                 </div>
               </TableCell>
+
+              <TableCell>{formatarData(channel.dataAcesso)}</TableCell>
 
               <TableCell className="!text-right text-green-light-1">
                 R${standardFormat(channel.valorGerado)}
