@@ -1,20 +1,13 @@
 "use client";
 
 import { Suspense, useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-
 import { OverviewCardsGroup } from "./_components/overview-cards";
 import { OverviewCardsSkeleton } from "./_components/overview-cards/skeleton";
 import { TopChannels } from "@/components/Tables/top-channels";
 import { TopChannelsSkeleton } from "@/components/Tables/top-channels/skeleton";
-import { createTimeFrameExtractor } from "@/utils/timeframe-extractor";
 import api from "@/utils/api"; // 🔥 Importando API com interceptação
 
 export default function Home() {
-  const searchParams = useSearchParams();
-  const selected_time_frame = searchParams.get("selected_time_frame") || "";
-  const extractTimeFrame = createTimeFrameExtractor(selected_time_frame);
-
   // Estado para armazenar os dados do dashboard
   const [dashboardData, setDashboardData] = useState({
     pedidos: 0,
