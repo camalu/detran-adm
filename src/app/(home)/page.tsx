@@ -3,8 +3,6 @@
 import { PaymentsOverview } from "@/components/Charts/payments-overview";
 import { UsedDevices } from "@/components/Charts/used-devices";
 import { WeeksProfit } from "@/components/Charts/weeks-profit";
-import { TopChannels } from "@/components/Tables/top-channels";
-import { TopChannelsSkeleton } from "@/components/Tables/top-channels/skeleton";
 import { createTimeFrameExtractor } from "@/utils/timeframe-extractor";
 import { Suspense, useState, useEffect } from "react";
 import { ChatsCard } from "./_components/chats-card";
@@ -12,6 +10,9 @@ import { OverviewCardsGroup } from "./_components/overview-cards";
 import { OverviewCardsSkeleton } from "./_components/overview-cards/skeleton";
 import { RegionLabels } from "./_components/region-labels";
 import { useSearchParams } from "next/navigation"; // 🛠️ Agora pegamos os parâmetros corretamente
+import { TopChannels } from "@/components/Tables/top-channels";
+import { TopChannelsSkeleton } from "@/components/Tables/top-channels/skeleton";
+
 import api from "@/utils/api"; // 🔥 Importando API com interceptação
 
 export default function Home() {
@@ -23,6 +24,9 @@ export default function Home() {
     pedidos: 0,
     totalVendas: 0,
     pagamentos: 0,
+    totalGerados: 0,
+    totalPendentes: 0,
+    rate: "0.00%",
   });
   const [loading, setLoading] = useState(true);
 
@@ -59,11 +63,20 @@ export default function Home() {
     <>
       <Suspense fallback={<OverviewCardsSkeleton />}>
         <OverviewCardsGroup
-          views={dashboardData.pedidos}
-          profit={dashboardData.totalVendas}
-          products={dashboardData.pagamentos}
+          pedidos={dashboardData.pedidos}
+          pagamentos={dashboardData.pagamentos}
+          totalVendas={dashboardData.totalVendas}
+          totalGerados={dashboardData.totalGerados}
+          totalPendentes={dashboardData.totalPendentes}
+          rate={dashboardData.rate}
         />
       </Suspense>
+
+      <div className="space-y-10">
+        <Suspense fallback={<TopChannelsSkeleton />}>
+          <TopChannels />
+        </Suspense>
+      </div>
     </>
   );
 }
